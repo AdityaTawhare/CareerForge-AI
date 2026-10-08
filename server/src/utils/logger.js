@@ -1,7 +1,5 @@
-'use strict';
-
-const pino = require('pino');
-const env = require('../config/env');
+import pino from 'pino';
+import { env } from '../config/env.js';
 
 /**
  * Centralized pino logger.
@@ -26,4 +24,4 @@ const logger = pino({
   }),
 });
 
-module.exports = logger;
+export default logger;

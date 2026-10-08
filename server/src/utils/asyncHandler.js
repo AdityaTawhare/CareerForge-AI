@@ -1,4 +1,3 @@
-'use strict';
 
 /**
  * Wraps async route handlers so you never need try/catch in controllers.
@@ -13,4 +12,4 @@ const asyncHandler = (fn) => (req, res, next) => {
   Promise.resolve(fn(req, res, next)).catch(next);
 };
 
-module.exports = asyncHandler;
+export { asyncHandler };

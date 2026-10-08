@@ -1,8 +1,6 @@
-'use strict';
-
-const mongoose = require('mongoose');
-const env = require('./env');
-const logger = require('../utils/logger');
+import mongoose from 'mongoose';
+import { env } from './env.js';
+import logger from '../utils/logger.js';
 
 let isConnected = false;
 
@@ -64,6 +62,9 @@ const disconnectDB = async () => {
 /**
  * Returns 'connected' or 'disconnected' — used by health endpoint.
  */
-const getDbStatus = () => (isConnected ? 'connected' : 'disconnected');
+const getDbStatus = () => ({
+  status: isConnected ? 'connected' : 'disconnected',
+  name:   isConnected ? mongoose.connection.name : null,
+});
 
-module.exports = { connectDB, disconnectDB, getDbStatus };
+export { connectDB, disconnectDB, getDbStatus };

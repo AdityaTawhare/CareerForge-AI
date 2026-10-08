@@ -1,43 +1,36 @@
-'use strict';
-
 /**
- * Standardised API response wrapper.
- * All successful responses use this shape:
- *   { success: true, message, data, meta }
- *
- * Usage in a controller:
- *   res.json(ApiResponse.success({ user }, 'Login successful'));
- *   res.json(ApiResponse.paginated(items, total, page, limit));
+ * Standard success response wrapper.
+ * All API endpoints should use this to ensure consistency.
  */
-class ApiResponse {
+export class ApiResponse {
   /**
-   * @param {boolean} success
-   * @param {string}  message
-   * @param {*}       [data]
-   * @param {object}  [meta]   - pagination, timestamps, etc.
+   * @param {number} statusCode  HTTP status code (2xx)
+   * @param {any}    data        Response payload
+   * @param {string} message     Human-readable success message
+   * @param {object} [meta]      Optional pagination / extra metadata
    */
-  constructor(success, message, data = null, meta = null) {
-    this.success = success;
-    this.message = message;
-    if (data !== null) this.data = data;
-    if (meta !== null) this.meta = meta;
+  constructor(statusCode, data, message = 'Success', meta = null) {
+    this.success    = true;
+    this.statusCode = statusCode;
+    this.message    = message;
+    this.data       = data;
+    if (meta) this.meta = meta;
   }
 
-  static success(data = null, message = 'Success') {
-    return new ApiResponse(true, message, data);
+  send(res) {
+    return res.status(this.statusCode).json(this);
   }
 
-  static paginated(data, total, page, limit, message = 'Success') {
-    const totalPages = Math.ceil(total / limit);
-    return new ApiResponse(true, message, data, {
-      total,
-      page,
-      limit,
-      totalPages,
-      hasNextPage: page < totalPages,
-      hasPrevPage: page > 1,
-    });
+  /* ── Factory methods ──────────────────────────────────────────────── */
+  static ok(res, data, message = 'Success', meta = null) {
+    return new ApiResponse(200, data, message, meta).send(res);
+  }
+
+  static created(res, data, message = 'Created successfully') {
+    return new ApiResponse(201, data, message).send(res);
+  }
+
+  static noContent(res) {
+    return res.status(204).send();
   }
 }
-
-module.exports = ApiResponse;

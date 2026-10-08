@@ -1,6 +1,4 @@
-'use strict';
-
-const logger = require('../utils/logger');
+import logger from '../utils/logger.js';
 
 /**
  * HTTP request logger middleware.
@@ -30,4 +28,4 @@ const requestLogger = (req, res, next) => {
   next();
 };
 
-module.exports = requestLogger;
+export default requestLogger;

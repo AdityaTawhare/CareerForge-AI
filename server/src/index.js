@@ -1,130 +1,132 @@
-'use strict';
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import mongoSanitize from 'express-mongo-sanitize';
+import swaggerUi from 'swagger-ui-express';
 
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-const mongoSanitize = require('express-mongo-sanitize');
+import { env } from './config/env.js';
+import { connectDB, getDbStatus } from './config/db.js';
+import { swaggerSpec } from './config/swagger.js';
+import requestLogger from './middleware/requestLogger.js';
+import errorHandler from './middleware/errorHandler.js';
+import { ApiError } from './utils/ApiError.js';
 
-const env = require('./config/env');
-const { connectDB, getDbStatus } = require('./config/db');
-const requestLogger = require('./middleware/requestLogger');
-const errorHandler = require('./middleware/errorHandler');
-const ApiError = require('./utils/ApiError');
+// ─── Route modules ────────────────────────────────────────────────────────────
+import skillsRouter from './modules/skills/skills.routes.js';
 
-// ─── App ─────────────────────────────────────────────────────────────────────
+// ─── App ──────────────────────────────────────────────────────────────────────
 const app = express();
 
-// ─── Security middleware ──────────────────────────────────────────────────────
-
-app.use(
-  helmet({
-    crossOriginEmbedderPolicy: false, // Allow embedding for demo
-  })
-);
-
-app.use(
-  cors({
-    origin: env.CLIENT_URL,
-    credentials: true, // Allow httpOnly cookies
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  })
-);
-
-// Global rate limit — 100 requests per 15 minutes per IP
-app.use(
-  rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
-    message: {
-      success: false,
-      message: 'Too many requests. Please try again in 15 minutes.',
-      code: 'TOO_MANY_REQUESTS',
-    },
-    standardHeaders: true,
-    legacyHeaders: false,
-  })
-);
-
-// ─── Body parsing ─────────────────────────────────────────────────────────────
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-
-// Sanitize MongoDB operators from request body/query (NoSQL injection prevention)
+// ─── Security middleware ───────────────────────────────────────────────────────
+app.use(helmet({ crossOriginEmbedderPolicy: false }));
+app.use(cors({
+  origin: env.CLIENT_URL,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+app.use(express.json({ limit: '2mb' }));
+app.use(express.urlencoded({ extended: true, limit: '2mb' }));
 app.use(mongoSanitize());
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 200,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, message: 'Too many requests, please try again later.' },
+}));
 
-// ─── Logging ──────────────────────────────────────────────────────────────────
+// ─── Request logging ──────────────────────────────────────────────────────────
 app.use(requestLogger);
 
-// ─── Health endpoint ──────────────────────────────────────────────────────────
+// ─── Swagger UI ───────────────────────────────────────────────────────────────
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customSiteTitle: 'CareerForge AI — API Docs',
+  swaggerOptions: { persistAuthorization: true },
+}));
+
+// ─── Health ───────────────────────────────────────────────────────────────────
 /**
  * @swagger
  * /api/health:
  *   get:
- *     summary: Server health check
+ *     summary: Health check
  *     tags: [System]
+ *     security: []
  *     responses:
  *       200:
- *         description: Server is running
+ *         description: Server and DB status
  */
 app.get('/api/health', (_req, res) => {
+  const db = getDbStatus();
   res.json({
-    success: true,
-    status: 'ok',
-    environment: env.NODE_ENV,
+    success:  true,
+    status:   'ok',
+    db:       db.status,
+    dbName:   db.name,
+    env:      env.NODE_ENV,
     timestamp: new Date().toISOString(),
-    uptime: Math.floor(process.uptime()),
-    db: getDbStatus(),
-    demoMode: env.DEMO_MODE,
   });
 });
 
-// ─── API routes (added per phase) ────────────────────────────────────────────
-// Phase 3+: module routes are registered here
-// Example: app.use('/api/auth', require('./modules/auth/authRoutes'));
+// ─── Seed endpoint (dev only) ─────────────────────────────────────────────────
+if (env.NODE_ENV === 'development') {
+  app.post('/api/seed', async (_req, res, next) => {
+    try {
+      const { main: seedSkills }    = await import('./scripts/seedSkills.js');
+      const { main: seedCompanies } = await import('./scripts/seedCompanies.js');
+      const { main: seedQuestions } = await import('./scripts/seedQuestions.js');
+      const { main: seedResources } = await import('./scripts/seedResources.js');
+      await seedSkills();
+      await seedCompanies();
+      await seedQuestions();
+      await seedResources();
+      res.json({ success: true, message: 'Seed complete' });
+    } catch (err) {
+      next(err);
+    }
+  });
+}
 
-// ─── 404 handler ─────────────────────────────────────────────────────────────
-app.use((req, _res, next) => {
-  next(ApiError.notFound(`Route ${req.method} ${req.originalUrl}`));
+// ─── API routes ───────────────────────────────────────────────────────────────
+app.use('/api/skills',    skillsRouter);
+
+// ─── 404 handler ──────────────────────────────────────────────────────────────
+app.use((_req, _res, next) => {
+  next(ApiError.notFound('Route not found'));
 });
 
-// ─── Central error handler (must be last) ────────────────────────────────────
+// ─── Central error handler ────────────────────────────────────────────────────
 app.use(errorHandler);
 
-// ─── Start server ─────────────────────────────────────────────────────────────
+// ─── Server startup ───────────────────────────────────────────────────────────
+const PORT = env.PORT || 5000;
+
 const start = async () => {
   await connectDB();
-
-  app.listen(env.PORT, () => {
-    const logger = require('./utils/logger');
-    logger.info('--------------------------------------------------');
-    logger.info(`  CareerForge AI — Server`);
-    logger.info(`  URL:    http://localhost:${env.PORT}`);
-    logger.info(`  Health: http://localhost:${env.PORT}/api/health`);
-    logger.info(`  Mode:   ${env.NODE_ENV}`);
-    if (env.DEMO_MODE) {
-      logger.warn('  DEMO MODE ON — AI calls will return cached fixtures');
-    }
-    logger.info('--------------------------------------------------');
+  const server = app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`📖 API docs at http://localhost:${PORT}/api/docs`);
   });
+
+  // Graceful shutdown
+  const shutdown = async (signal) => {
+    console.log(`\n${signal} received — shutting down gracefully…`);
+    server.close(async () => {
+      const mongoose = (await import('mongoose')).default;
+      await mongoose.disconnect();
+      console.log('MongoDB disconnected. Bye!');
+      process.exit(0);
+    });
+    setTimeout(() => process.exit(1), 10_000);
+  };
+
+  process.on('SIGTERM', () => shutdown('SIGTERM'));
+  process.on('SIGINT',  () => shutdown('SIGINT'));
 };
 
-// ─── Graceful shutdown ────────────────────────────────────────────────────────
-process.on('unhandledRejection', (err) => {
-  const logger = require('./utils/logger');
-  logger.error({ err }, 'Unhandled promise rejection — shutting down');
+start().catch((err) => {
+  console.error('Failed to start server:', err);
   process.exit(1);
 });
-
-process.on('SIGTERM', async () => {
-  const logger = require('./utils/logger');
-  const { disconnectDB } = require('./config/db');
-  logger.info('SIGTERM received — graceful shutdown');
-  await disconnectDB();
-  process.exit(0);
-});
-
-start();
-
-module.exports = app; // Export for testing

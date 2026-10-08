@@ -1,7 +1,7 @@
-'use strict';
-
-const dotenv = require('dotenv');
-const path = require('path');
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Load .env from server root
 dotenv.config({ path: path.join(__dirname, '../../.env') });
@@ -60,4 +60,4 @@ const env = {
   DEMO_MODE: optional('DEMO_MODE', 'false') === 'true',
 };
 
-module.exports = env;
+export { env };

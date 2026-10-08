@@ -1,8 +1,6 @@
-'use strict';
-
-const logger = require('../utils/logger');
-const ApiError = require('../utils/ApiError');
-const env = require('../config/env');
+import logger from '../utils/logger.js';
+import { ApiError } from '../utils/ApiError.js';
+import { env } from '../config/env.js';
 
 /**
  * Central error handler — must be the LAST middleware registered in Express.
@@ -91,4 +89,4 @@ const errorHandler = (err, req, res, _next) => {
   res.status(statusCode).json(response);
 };
 
-module.exports = errorHandler;
+export default errorHandler;
