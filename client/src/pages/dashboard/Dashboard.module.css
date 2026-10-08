@@ -1,0 +1,116 @@
+.page { display: flex; flex-direction: column; gap: var(--space-6); }
+
+.header { display: flex; justify-content: space-between; align-items: flex-start; }
+.greeting { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
+.subtext { font-size: 0.875rem; color: var(--text-secondary); margin-top: var(--space-1); }
+
+.ctaBtn {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  background: linear-gradient(135deg, var(--primary-600), var(--primary-500));
+  color: #fff; border-radius: var(--radius-md); font-size: 0.875rem; font-weight: 600;
+  text-decoration: none; transition: all var(--duration-normal) var(--ease-default);
+  box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+}
+.ctaBtn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(99,102,241,0.4); color: #fff; }
+
+.nextAction {
+  display: flex; align-items: center; gap: var(--space-4);
+  background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(20,184,166,0.05));
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5);
+}
+.nextActionIcon {
+  width: 40px; height: 40px; border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--primary-600), var(--accent-500));
+  color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.nextActionContent { flex: 1; }
+.nextActionLabel { display: block; font-size: 0.6875rem; font-weight: 600; color: var(--primary-600); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.nextActionText { font-size: 0.9375rem; font-weight: 500; color: var(--text-primary); }
+.nextActionCta {
+  display: inline-flex; align-items: center; gap: var(--space-1);
+  padding: var(--space-2) var(--space-4); background: var(--primary-600); color: #fff;
+  border-radius: var(--radius-md); font-size: 0.875rem; font-weight: 500; text-decoration: none;
+  white-space: nowrap; transition: background var(--duration-fast);
+}
+.nextActionCta:hover { background: var(--primary-700); color: #fff; }
+
+.statsGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+
+.mainGrid { display: grid; grid-template-columns: 1fr 380px; gap: var(--space-5); }
+
+.sideCol { display: flex; flex-direction: column; gap: var(--space-5); }
+
+.card {
+  background: var(--bg-primary); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+
+.cardTitle { font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); }
+.cardTitleRow { display: flex; align-items: center; justify-content: space-between; }
+
+.readinessRow { display: flex; gap: var(--space-5); align-items: center; }
+.readinessMeta { flex: 1; display: flex; flex-direction: column; gap: var(--space-3); }
+.targetBadge {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: 4px 10px; background: var(--bg-secondary); border: 1px solid var(--border);
+  border-radius: var(--radius-full); font-size: 0.8125rem; font-weight: 500; color: var(--text-secondary);
+  width: fit-content;
+}
+.readinessNote { font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.6; }
+.linkBtn {
+  display: inline-flex; align-items: center; gap: var(--space-1);
+  font-size: 0.8125rem; color: var(--primary-600); text-decoration: none; font-weight: 500;
+}
+.linkBtn:hover { color: var(--primary-700); }
+
+.skillBars { display: flex; flex-direction: column; gap: var(--space-3); padding-top: var(--space-2); border-top: 1px solid var(--border); }
+.skillRow { display: flex; align-items: center; gap: var(--space-3); }
+.skillName { font-size: 0.8125rem; color: var(--text-secondary); width: 120px; flex-shrink: 0; }
+.skillTrack { flex: 1; height: 6px; background: var(--bg-tertiary); border-radius: var(--radius-full); overflow: hidden; }
+.skillFill { height: 100%; border-radius: var(--radius-full); }
+.skillScore { font-size: 0.75rem; color: var(--text-muted); width: 28px; text-align: right; flex-shrink: 0; }
+
+.streakCount { display: flex; align-items: center; gap: 4px; font-size: 0.8125rem; color: var(--text-secondary); font-weight: 600; }
+
+.activityList { display: flex; flex-direction: column; gap: var(--space-4); }
+.activityItem { display: flex; align-items: flex-start; gap: var(--space-3); }
+.activityIcon {
+  width: 28px; height: 28px; border-radius: var(--radius-md);
+  background: var(--bg-secondary); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center; color: var(--text-muted); flex-shrink: 0;
+}
+.activityText { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.activityMsg { font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.4; }
+.activityTime { display: flex; align-items: center; gap: 4px; font-size: 0.75rem; color: var(--text-muted); }
+
+.sectionTitle { font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-3); }
+
+.quickLinks { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-3); }
+.quickLink {
+  display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3);
+  background: var(--bg-primary); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: var(--space-4); text-decoration: none; transition: all var(--duration-normal) var(--ease-default);
+}
+.quickLink:hover { border-color: var(--primary-500); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.quickLinkIcon {
+  width: 40px; height: 40px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+}
+.quickLinkLabel { font-size: 0.875rem; font-weight: 500; color: var(--text-primary); flex: 1; }
+.quickLinkArrow { color: var(--text-muted); margin-top: auto; }
+
+@media (max-width: 1280px) {
+  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+  .mainGrid { grid-template-columns: 1fr; }
+  .quickLinks { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .header { flex-direction: column; gap: var(--space-4); }
+  .nextAction { flex-direction: column; align-items: flex-start; }
+  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+  .quickLinks { grid-template-columns: repeat(2, 1fr); }
+  .readinessRow { flex-direction: column; }
+}

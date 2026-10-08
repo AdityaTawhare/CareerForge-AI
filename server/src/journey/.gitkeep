@@ -1,0 +1,5 @@
+// Journey state machine — added in Phase 4/5
+// Files:
+//   stateMachine.js   - State definitions and valid transitions
+//   guards.js         - Guard conditions for each transition
+//   journeyService.js - Apply transitions, save to DB

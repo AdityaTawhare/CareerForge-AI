@@ -1,0 +1,14 @@
+// Modules are added per phase:
+// Phase 3:  models, schemas
+// Phase 4:  auth, users
+// Phase 5:  (LLM in src/llm/)
+// Phase 6:  resumes
+// Phase 8:  profiles
+// Phase 9:  companies, jd
+// Phase 10: gap
+// Phase 11: roadmaps
+// Phase 12: practice
+// Phase 13: mocks
+// Phase 15: analytics
+// Phase 16: readiness, tracker
+// Phase 17: coach, mentor, admin

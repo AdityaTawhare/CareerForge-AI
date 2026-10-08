@@ -1,0 +1,9 @@
+{
+  "name": "ai-service",
+  "version": "1.0.0",
+  "description": "CareerForge AI — Python FastAPI service",
+  "scripts": {
+    "dev": "uvicorn app.main:app --reload --port 8000",
+    "start": "uvicorn app.main:app --port 8000"
+  }
+}

@@ -1,0 +1,6 @@
+.wrapper { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); padding: var(--space-10) var(--space-8); text-align: center; }
+.icon { width: 56px; height: 56px; background: rgba(239,68,68,0.1); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; color: var(--color-error); }
+.title { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+.message { font-size: 0.875rem; color: var(--text-secondary); max-width: 340px; line-height: 1.6; }
+.retry { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); background: none; border: 1px solid var(--border); border-radius: var(--radius-md); color: var(--text-secondary); font-size: 0.875rem; cursor: pointer; font-family: inherit; transition: all var(--duration-fast) var(--ease-default); }
+.retry:hover { background: var(--bg-secondary); color: var(--text-primary); }

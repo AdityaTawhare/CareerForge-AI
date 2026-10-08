@@ -1,0 +1,47 @@
+# ─── Node ───────────────────────────────
+node_modules/
+dist/
+build/
+.npm
+
+# ─── Environment ────────────────────────
+.env
+.env.local
+.env.production
+
+# ─── Python ─────────────────────────────
+ai-service/venv/
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.egg-info/
+.pytest_cache/
+htmlcov/
+.coverage
+
+# ─── Logs ───────────────────────────────
+logs/
+*.log
+npm-debug.log*
+
+# ─── Editor ─────────────────────────────
+.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ─── OS ─────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Testing ────────────────────────────
+coverage/
+
+# ─── Misc ───────────────────────────────
+*.tgz
+.cache/

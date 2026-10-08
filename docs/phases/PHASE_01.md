@@ -4,7 +4,7 @@
 > **Owner:** B (Backend & DevOps lead)  
 > **Parallel:** None — must be first  
 > **Estimated effort:** Medium (2–3 days)  
-> **Status:** NOT STARTED
+> **Status:** ✅ COMPLETE — 2026-09-29
 
 ---
 

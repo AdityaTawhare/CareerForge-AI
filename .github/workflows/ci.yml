@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'phase/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    name: Lint, Test & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Lint (client + server)
+        run: npm run lint
+
+      - name: Run server tests
+        run: npm run test --workspace=server
+        env:
+          NODE_ENV: test
+          MONGODB_URI: ${{ secrets.MONGODB_URI_TEST || 'mongodb://localhost:27017/careerforge_test' }}
+          JWT_ACCESS_SECRET: test-access-secret-ci-only-not-real
+          JWT_REFRESH_SECRET: test-refresh-secret-ci-only-not-real
+          PORT: 5000
+
+      - name: Build client
+        run: npm run build --workspace=client
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: client-dist
+          path: client/dist
+          retention-days: 7
+
+  secret-scan:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

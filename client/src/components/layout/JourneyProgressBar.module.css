@@ -1,0 +1,86 @@
+.bar {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border);
+  padding: 0 var(--space-6);
+  position: sticky;
+  top: 56px;
+  z-index: 30;
+  overflow-x: auto;
+}
+
+.steps {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  height: 48px;
+  min-width: max-content;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.connector {
+  width: 32px;
+  height: 2px;
+  background: var(--border);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.connectorFilled {
+  background: var(--border);
+}
+
+.connectorProgress {
+  position: absolute;
+  inset: 0;
+  background: var(--primary-500);
+  transform-origin: left;
+}
+
+.stepLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  transition: all var(--duration-fast) var(--ease-default);
+  white-space: nowrap;
+}
+
+.stepLink:hover {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.stepLink.active {
+  color: var(--primary-600);
+  font-weight: 500;
+}
+
+.stepLink.completed {
+  color: var(--color-success);
+}
+
+.stepIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stepLabel {
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 768px) {
+  .stepLabel { display: none; }
+  .stepLink { padding: var(--space-2); }
+}

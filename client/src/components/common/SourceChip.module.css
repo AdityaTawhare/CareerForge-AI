@@ -1,0 +1,8 @@
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: var(--radius-full); background: var(--bg-tertiary); border: 1px solid var(--border); font-size: 0.75rem; }
+.link { text-decoration: none; }
+.link:hover .chip { border-color: var(--primary-500); }
+.source { font-weight: 500; color: var(--text-secondary); }
+.confidence { font-size: 0.625rem; letter-spacing: -1px; }
+.conf_high   { color: var(--color-success); }
+.conf_medium { color: var(--color-warning); }
+.conf_low    { color: var(--color-error); }

@@ -1,0 +1,9 @@
+// LLM Gateway — added in Phase 5
+// Folder structure:
+//   gateway.js        - Main gateway with fallback chain
+//   providers/        - gemini.js, groq.js, openrouter.js, ollama.js
+//   prompts/          - Versioned prompt templates (*.v1.md)
+//   cache.js          - MongoDB-based response cache
+//   quota.js          - Per-user and global quota tracker
+//   piiMasker.js      - PII masking before LLM calls
+//   schemas/          - Zod schemas for LLM output validation

@@ -1,0 +1,16 @@
+.list { display: flex; flex-direction: column; gap: var(--space-4); }
+.item { display: grid; grid-template-columns: 140px 1fr 48px; gap: var(--space-4); align-items: center; }
+.label { font-size: 0.875rem; font-weight: 500; color: var(--text-primary); }
+.bars { display: flex; flex-direction: column; gap: 6px; }
+.barRow { display: flex; align-items: center; gap: var(--space-3); }
+.barLabel { font-size: 0.75rem; color: var(--text-muted); width: 36px; flex-shrink: 0; }
+.track { flex: 1; height: 8px; background: var(--bg-tertiary); border-radius: var(--radius-full); overflow: hidden; }
+.barBefore { height: 100%; background: var(--border); border-radius: var(--radius-full); }
+.barAfter { height: 100%; background: var(--primary-500); border-radius: var(--radius-full); }
+.barAfter.improved { background: var(--color-success); }
+.barAfter.declined { background: var(--color-error); }
+.value { font-size: 0.75rem; color: var(--text-secondary); width: 24px; text-align: right; flex-shrink: 0; }
+.delta { font-size: 0.8125rem; font-weight: 600; text-align: center; padding: 2px 6px; border-radius: var(--radius-sm); }
+.deltaPos { color: var(--color-success); background: rgba(16, 185, 129, 0.1); }
+.deltaNeg { color: var(--color-error); background: rgba(239, 68, 68, 0.1); }
+.deltaNeutral { color: var(--text-muted); background: var(--bg-tertiary); }

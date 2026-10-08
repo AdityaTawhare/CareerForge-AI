@@ -1,0 +1,12 @@
+.wrapper { overflow-x: auto; font-size: 0.8125rem; }
+.headerRow, .row { display: grid; gap: 4px; margin-bottom: 4px; }
+.headerRow { grid-template-columns: 120px repeat(var(--cols, 4), 1fr); }
+.row { grid-template-columns: 120px repeat(var(--cols, 4), 1fr); }
+.corner, .colHeader, .rowHeader { padding: 4px 8px; font-size: 0.75rem; color: var(--text-muted); }
+.colHeader { text-align: center; font-weight: 500; color: var(--text-secondary); white-space: nowrap; }
+.rowHeader { font-weight: 500; color: var(--text-secondary); display: flex; align-items: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cell { height: 28px; border-radius: var(--radius-sm); transition: opacity var(--duration-fast) var(--ease-default), transform var(--duration-fast) var(--ease-default); cursor: default; }
+.cell:hover { transform: scale(1.08); opacity: 1 !important; }
+.legend { display: flex; align-items: center; gap: var(--space-3); margin-top: var(--space-4); font-size: 0.75rem; color: var(--text-muted); }
+.legendBar { flex: 1; max-width: 120px; height: 8px; border-radius: var(--radius-full); overflow: hidden; }
+.legendGrad { height: 100%; background: linear-gradient(to right, var(--color-error), var(--color-warning), var(--color-success)); }

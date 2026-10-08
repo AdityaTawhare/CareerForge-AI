@@ -1,0 +1,46 @@
+export const sampleMockResults = {
+  mock1: {
+    id: 'mock_001',
+    date: '2026-09-20',
+    company: 'Google',
+    round: 'Technical Round 1 (DSA)',
+    duration: 62,
+    overallScore: 58,
+    verdict: 'Needs Improvement',
+    skills: [
+      { name: 'Problem Solving',  score: 60 },
+      { name: 'Code Quality',     score: 65 },
+      { name: 'Communication',    score: 50 },
+      { name: 'Time Management',  score: 55 },
+      { name: 'Approach',         score: 62 },
+    ],
+    questions: [
+      { q: 'Two Sum Variant', difficulty: 'Easy',   status: 'solved',   timeTaken: 12 },
+      { q: 'LRU Cache',       difficulty: 'Medium', status: 'partial',  timeTaken: 30 },
+      { q: 'Alien Dictionary', difficulty: 'Hard',  status: 'not-done', timeTaken: 20 },
+    ],
+    feedback: 'Struggled with graph problems. Brute-force first approach but did not optimise. Communication was unclear.',
+  },
+  mock2: {
+    id: 'mock_002',
+    date: '2026-10-05',
+    company: 'Google',
+    round: 'Technical Round 1 (DSA)',
+    duration: 58,
+    overallScore: 74,
+    verdict: 'Improved',
+    skills: [
+      { name: 'Problem Solving',  score: 78 },
+      { name: 'Code Quality',     score: 72 },
+      { name: 'Communication',    score: 70 },
+      { name: 'Time Management',  score: 75 },
+      { name: 'Approach',         score: 76 },
+    ],
+    questions: [
+      { q: 'Two Sum Variant',  difficulty: 'Easy',   status: 'solved',  timeTaken: 8  },
+      { q: 'LRU Cache',        difficulty: 'Medium', status: 'solved',  timeTaken: 25 },
+      { q: 'Alien Dictionary', difficulty: 'Hard',   status: 'partial', timeTaken: 25 },
+    ],
+    feedback: 'Good improvement in DSA. Clearly communicated approach before coding. Still needs work on hard graph problems.',
+  },
+};

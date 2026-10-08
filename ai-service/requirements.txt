@@ -1,0 +1,26 @@
+fastapi==0.115.2
+uvicorn[standard]==0.32.0
+pydantic==2.9.2
+pydantic-settings==2.6.0
+python-dotenv==1.0.1
+httpx==0.27.2
+
+# ─── IMPORTANT: Requires Python 3.10, 3.11, or 3.12 ─────────────────────────
+# Python 3.13+ is NOT yet supported (pydantic-core has no pre-built wheels).
+# Use: py -3.11 -m venv venv  OR  py -3.12 -m venv venv
+# If unsure which Python you have: py --list
+
+# Phase 6+ (resume parsing) — uncomment when starting Phase 6
+# pymupdf==1.24.12
+# pdfplumber==0.11.4
+# python-docx==1.1.2
+# spacy==3.8.2
+
+# Phase 5+ (embeddings) — uncomment when starting Phase 5
+# sentence-transformers==3.2.1
+# torch==2.5.0
+
+# Phase 10+ (NLP/ML) — uncomment when starting Phase 10
+# scikit-learn==1.5.2
+# vaderSentiment==3.3.2
+# numpy==2.1.2
